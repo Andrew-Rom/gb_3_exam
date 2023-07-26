@@ -1,0 +1,28 @@
+ 1142  mkdir gb_exam
+ 1143  cd gb_exam
+ 1144  cat > 'Домашние животные'
+ 1145  cat 'Домашние животные'
+ 1146  cat > 'Вьючные животные'
+ 1147  cat 'Вьючные животные'
+ 1148  cat 'Домашние животные' 'Вьючные животные' > combinedfile
+ 1149  cat combinedfile
+ 1150  mv combinedfile 'Друзья человека'
+ 1151  ll
+ 1152  clear
+ 1153  mkdir innerdir
+ 1154  mv 'Друзья человека' ./innerdir/
+ 1155  ll
+ 1156  cd innerdir/
+ 1157  ll
+ 1158  clear
+ 1159  cd ..
+ 1160  clear
+ 1161  wget https://dev.mysql.com/get/mysql-apt-config_0.8.26-1_all.deb
+ 1162  sudo dpkg -i mysql-apt-config_0.8.26-1_all.deb
+ 1163  sudo apt update
+ 1164  sudo apt install mysql-server mysql-client
+ 1165  clear
+ 1166  wget https://github.com/johnfactotum/foliate/releases/download/2.6.4/com.github.johnfactotum.foliate_2.6.4_all.deb
+ 1167  sudo dpkg -i com.github.johnfactotum.foliate_2.6.4_all.deb
+ 1168  sudo dpkg -r com.github.johnfactotum.foliate
+ 1169  history > history.txt
