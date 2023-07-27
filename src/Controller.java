@@ -210,7 +210,7 @@ public class Controller {
     private static Date getAnimalBirthday() {
         boolean askUser = true;
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-        Date getBirthday = null;
+        Date animalBirthday = null;
         Scanner scanner = new Scanner(System.in);
         while (askUser) {
             System.out.print("Enter the birthday " +
@@ -218,7 +218,7 @@ public class Controller {
             String getFromUser = scanner.nextLine();
 
             try {
-                getBirthday = ft.parse(getFromUser);
+                animalBirthday = ft.parse(getFromUser);
                 askUser = false;
             } catch (ParseException e) {
                 System.out.println("Incorrect input");
@@ -226,7 +226,7 @@ public class Controller {
                 System.out.println("Unknown error");
             }
         }
-        return getBirthday;
+        return animalBirthday;
     }
 
     /**
