@@ -44,16 +44,16 @@ public class Controller {
      * Method for collecting information about some new animal and add it into collection.
      * After that printing out note about added animal.
      */
-    public static void addAnimal() {
-        String typeNewAnimal = askType();
+    private static void addAnimal() {
+        String typeNewAnimal = getAnimalType();
         int groupNewAnimal = 0;
         switch (typeNewAnimal) {
-            case "Pets" -> groupNewAnimal = askPetGroup();
-            case "Pack animals" -> groupNewAnimal = askPackAnimalGroup();
+            case "Pets" -> groupNewAnimal = getPetGroup();
+            case "Pack animals" -> groupNewAnimal = getPackAnimalGroup();
         }
-        String nameNewAnimal = askAnimalName();
-        Date birthdayNewAnimal = askBirthday();
-        ArrayList<String> commandsNewAnimal = askAnimalCommands();
+        String nameNewAnimal = getAnimalName();
+        Date birthdayNewAnimal = getAnimalBirthday();
+        ArrayList<String> commandsNewAnimal = getAnimalCommand();
         int idNewAnimal = Counter.add();
         switch (groupNewAnimal) {
             case 11 -> {
@@ -95,7 +95,7 @@ public class Controller {
      *
      * @return ArrayList with commands.
      */
-    private static ArrayList<String> askAnimalCommands() {
+    private static ArrayList<String> getAnimalCommand() {
         ArrayList<String> getCommands = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter animal's command: ");
@@ -108,7 +108,7 @@ public class Controller {
      *
      * @return String with type name.
      */
-    private static String askType() {
+    private static String getAnimalType() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("""
@@ -134,7 +134,7 @@ public class Controller {
      *
      * @return Code (int) with group.
      */
-    private static int askPetGroup() {
+    private static int getPetGroup() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("""
@@ -164,7 +164,7 @@ public class Controller {
      *
      * @return Code (int) with group.
      */
-    private static int askPackAnimalGroup() {
+    private static int getPackAnimalGroup() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("""
@@ -194,7 +194,7 @@ public class Controller {
      *
      * @return String with name.
      */
-    private static String askAnimalName() {
+    private static String getAnimalName() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter animal's name: ");
         return scanner.next();
@@ -207,7 +207,7 @@ public class Controller {
      * @throws ParseException if entered string can not be parsed.
      * @throws Exception      in case getting unexpected error.
      */
-    private static Date askBirthday() {
+    private static Date getAnimalBirthday() {
         boolean askUser = true;
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         Date getBirthday = null;
@@ -230,91 +230,67 @@ public class Controller {
     }
 
     /**
-     * Method for searching list of animal's commands by animal ID.
-     * Print out list of animal's commands if ID is find.
-     * Print out message if ID is not find.
-     *
-     * @throws Exception in case incorrect input.
+     * Method for printing out list of animal's commands.
      */
-    public static void showAnimalCommands() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("The collection contains information about next animals:");
-        for (Animal animal : zoo) {
-            System.out.println("ID " + animal.getAnimalId() + " > " + animal.getGROUP() + " - " + animal.getNAME());
-        }
-        System.out.print("Enter animal's ID for getting list of its commands > ");
-        try {
-            int selection = scanner.nextInt();
-            for (Animal animal : zoo) {
-                if (selection == animal.getAnimalId()) {
-                    System.out.println(animal.getCommands());
-                    break;
-                } else {
-                    System.out.println("Sorry, entered ID was not find it collection.");
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Incorrect input");
-        }
+    private static void showAnimalCommands() {
+        System.out.println(findAnimal().getCommands());
     }
 
     /**
      * Method for adding a new command into list of animal's commands.
-     * Add a new command into list of animal's commands if ID is find.
-     * Print out message if ID is not find.
-     *
-     * @throws Exception in case incorrect input.
      */
-    public static void addNewCommand() {
+    private static void addNewCommand() {
+        Animal trainedAnimal = findAnimal();
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a new command: ");
+        trainedAnimal.addCommands(scanner.next());
+        System.out.println("New command was added successfully");
+    }
+
+    /**
+     * Method for printing out info of animal if ID is find.
+     */
+    private static void showAnimalInfo() {
+        System.out.println(findAnimal());
+    }
+
+    /**
+     * Method for printing out data about all animals from collection.
+     */
+    private static void showAllAnimals() {
         System.out.println("The collection contains information about next animals:");
         for (Animal animal : zoo) {
             System.out.println("ID " + animal.getAnimalId() + " > " + animal.getGROUP() + " - " + animal.getNAME());
-        }
-        System.out.print("Enter animal's ID which was trained a new command  > ");
-        try {
-            int selection = scanner.nextInt();
-            for (Animal animal : zoo) {
-                if (selection == animal.getAnimalId()) {
-                    System.out.print("Enter a new command: ");
-                    animal.addCommands(scanner.next());
-                    break;
-                } else {
-                    System.out.println("Sorry, entered ID was not find it collection.");
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Incorrect input");
         }
     }
 
     /**
      * Method for searching animal by ID.
-     * Print out info of animal if ID is find.
      * Print out message if ID is not find.
      *
+     * @return object type Animal
      * @throws Exception in case incorrect input.
      */
-    public static void showAnimalInfo() {
+    private static Animal findAnimal() {
+        Animal selectedAnimal = null;
+        boolean ask = true;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("The collection contains information about next animals:");
-        for (Animal animal : zoo) {
-            System.out.println("ID " + animal.getAnimalId() + " > " + animal.getGROUP() + " - " + animal.getNAME());
-        }
-        System.out.print("Enter animal's ID for getting information about it > ");
+        showAllAnimals();
         try {
-            int selection = scanner.nextInt();
-            for (Animal animal : zoo) {
-                if (selection == animal.getAnimalId()) {
-                    System.out.println(animal);
-                    break;
-                } else {
-                    System.out.println("Sorry, entered ID was not find it collection.");
+            while (ask) {
+                System.out.print("Enter selected animal's ID > ");
+                int selection = scanner.nextInt();
+                for (Animal animal : zoo) {
+                    if (selection == animal.getAnimalId()) {
+                        selectedAnimal = animal;
+                        ask = false;
+                    }
                 }
+                if (ask) System.out.println("Sorry, entered ID was not find it collection. Try again \n");
             }
         } catch (Exception e) {
             System.out.println("Incorrect input");
         }
+        return selectedAnimal;
     }
-
 }
